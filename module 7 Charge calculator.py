@@ -8,24 +8,29 @@
 #-------------------------------------------------------------------------------
 
 ##Asking the user questions to define if they need to pay taxes.
-
 userCountry = input ("In what country do you live? ")
 userProvince = input ("In what province do you live?")
 orderTotal = input ("Enter your total order amount: ")
 
 ##Defining the TAX values inside variables for calculations.
 orderTotal = float(orderTotal)
-albertaCharge = orderTotal * 100.05
-ontarioCharge = orderTotal * 100.13
-provTax = orderTotal * 100.06
-provGst = provTax * 100.05
+albertaCharge = orderTotal * .05
+albertaCalc = orderTotal + albertaCharge
+ontarioCharge = orderTotal * .13
+ontarioCalc = orderTotal + ontarioCharge
+provTax = orderTotal * .06 + orderTotal
+provGst = provTax * .05 + orderTotal
+combiTax = provTax + provGst
 
+##I did the type casting in one line because of the concatenation issues.
+##For better readability you can also do this on a separate line of code.
 if userCountry == "Canada" and userProvince == "Alberta":
-    print("You have to pay the following amount incl charges: " + str(albertaCharge))
+    print("You have to pay the following amount incl charges: " + str(albertaCalc))
 if userCountry == "Canada" and userProvince == "Ontario":
-    print("You have to pay the following amount incl charges: " + str(ontarioCharge))
-if userCountry == "Canada" and userProvince != "Alberta" or "Ontario":
-    print("You have to pay the provincial / GST tax: " + str(provTax) + str(provGst))
+    print("You have to pay the following amount incl charges: " + str(ontarioCalc))
+elif userCountry == "Canada" and userProvince != "Alberta" or "Ontario":
+    print("You have to pay the provincial / GST tax: " + str(combiTax))
 else:
     if userCountry != "Canada":
         print("You do not need to pay taxes and are charged: " + str(orderTotal))
+
